@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { products } from "@/data/products";
 import { productReview } from "@/utils/product-review";
 import { Rating } from "@mui/material";
@@ -14,9 +14,10 @@ interface Props {
 }
 
 export const ProductDetails = ({ productId }: Props) => {
+  const [isProductInCart, setIsProductInCart] = useState(false);
   const product = products.find((item) => item.id === productId);
 
-  const { addToCart, cartProducts } = useCart();
+  const { addToCart, cartProducts: cartContextProducts } = useCart();
   const [cartItem, setCartItem] = useState<CartProductType>({
     id: product ? product.id : "",
     name: product ? product.name : "",
@@ -56,7 +57,16 @@ export const ProductDetails = ({ productId }: Props) => {
   const handleAdd = (cartItem: CartProductType) => {
     addToCart(cartItem);
   };
-  console.log({ cartProducts });
+  useEffect(() => {
+    if (cartContextProducts) {
+      const checkProductIndex = cartContextProducts.findIndex(
+        (item) => item.id === product?.id
+      );
+      if (checkProductIndex > -1) {
+        setIsProductInCart(true);
+      }
+    }
+  }, [cartContextProducts]);
   return (
     <div>
       <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
@@ -96,7 +106,7 @@ export const ProductDetails = ({ productId }: Props) => {
                 images={product ? product.images : []}
               />
             </div>
-            {cartProducts.length === 0 ? (
+            {!isProductInCart ? (
               <div>
                 <Button onClick={() => handleAdd(cartItem)}>Add to cart</Button>
               </div>
