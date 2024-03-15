@@ -8,7 +8,8 @@ import {
   useEffect,
 } from "react";
 import { CartProductType } from "../types/types";
-import { PRODUCT_KEY } from "../../data/constants";
+import { PRODUCT_KEY } from "../data/constants";
+import { toast } from "react-toastify";
 interface CartContextType {
   cartProducts: CartProductType[];
   cartTotalQuantity: number;
@@ -22,7 +23,7 @@ export const CartContext = createContext<CartContextType | null>(null);
 const CartContextProvider = ({ children }: IProps) => {
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
   const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
-  const [isCartInProduct, setIsCartInProduct] = useState(false);
+
   useEffect(() => {
     const storedCartProducts = localStorage.getItem(PRODUCT_KEY);
     if (storedCartProducts) {
@@ -39,6 +40,7 @@ const CartContextProvider = ({ children }: IProps) => {
       } else {
         existingProduct = [product];
       }
+      toast.success("Product added to cart");
       localStorage.setItem(PRODUCT_KEY, JSON.stringify(existingProduct));
       return existingProduct;
     });

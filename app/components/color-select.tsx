@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { CartProductType, SelectedImgType } from "../types/types";
+import { CartProductType, SelectedImgType } from "../../types/types";
 interface ColorProps {
   handleColorSelect: (value: SelectedImgType) => void;
   cartItem: CartProductType;

@@ -33,7 +33,7 @@ export function ProductCard({ product }: ProductProps) {
         <div>
           <p className="font-semibold">{formatPrice(product.price)}</p>
         </div>
-        <Link href={`/product/64a4ebe300900d44bb50628a`}>View</Link>
+        <Link href={`/product/${product.id}`}>View</Link>
       </div>
     </div>
   );

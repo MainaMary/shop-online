@@ -1,5 +1,5 @@
 "use client";
-import { CartProductType } from "../types/types";
+import { CartProductType } from "../../types/types";
 
 import React from "react";
 interface QuantityProps {

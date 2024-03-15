@@ -6,9 +6,9 @@ import { Rating } from "@mui/material";
 import { formatPrice } from "@/utils/format-price";
 import ColorSelect from "@/app/components/color-select";
 import Image from "next/image";
-import { CartProductType, SelectedImgType } from "@/app/types/types";
+import { CartProductType, SelectedImgType } from "@/types/types";
 import { ProductQuantity, Button, ListRating } from "@/app/components";
-import { useCart } from "@/app/hooks/useCartHook";
+import { useCart } from "@/hooks/useCartHook";
 interface Props {
   productId: string;
 }
