@@ -3,6 +3,8 @@ import { Footer } from "./components/footer";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CartContextProvider from "./hooks/useCartHook";
 
 const poppins = Poppins({ weight: ["400", "500", "700"], subsets: ["latin"] });
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <CartContextProvider>
+          <ToastContainer />
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <div className="grid grid-cols-5">
