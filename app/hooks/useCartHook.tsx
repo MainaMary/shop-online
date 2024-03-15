@@ -1,9 +1,16 @@
 "use client";
-import { ReactNode, createContext, useState, useContext } from "react";
+import {
+  ReactNode,
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { CartProductType } from "../types/types";
-
+import { PRODUCT_KEY } from "../../data/constants";
 interface CartContextType {
-  cartItems: CartProductType[];
+  cartProducts: CartProductType[];
   cartTotalQuantity: number;
   addToCart: (item: CartProductType) => void;
 }
@@ -14,13 +21,33 @@ export const CartContext = createContext<CartContextType | null>(null);
 
 const CartContextProvider = ({ children }: IProps) => {
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
-  const [cartItems, setCartItems] = useState<CartProductType[] | null>(null);
-  const addToCart = () => {};
+  const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
+  const [isCartInProduct, setIsCartInProduct] = useState(false);
+  useEffect(() => {
+    const storedCartProducts = localStorage.getItem(PRODUCT_KEY);
+    if (storedCartProducts) {
+      setCartProducts(JSON.parse(storedCartProducts));
+    } else {
+      setCartProducts([]);
+    }
+  }, []);
+  const addToCart = useCallback((product: CartProductType) => {
+    setCartProducts((prev) => {
+      let existingProduct;
+      if (prev) {
+        existingProduct = [...prev, product];
+      } else {
+        existingProduct = [product];
+      }
+      localStorage.setItem(PRODUCT_KEY, JSON.stringify(existingProduct));
+      return existingProduct;
+    });
+  }, []);
   const value = {
     cartTotalQuantity,
     setCartTotalQuantity,
-    cartItems,
-    setCartItems,
+    cartProducts,
+    setCartProducts,
     addToCart,
   };
 

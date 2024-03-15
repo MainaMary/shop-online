@@ -8,14 +8,15 @@ import ColorSelect from "@/app/components/color-select";
 import Image from "next/image";
 import { CartProductType, SelectedImgType } from "@/app/types/types";
 import { ProductQuantity, Button, ListRating } from "@/app/components";
-
+import { useCart } from "@/app/hooks/useCartHook";
 interface Props {
   productId: string;
 }
 
 export const ProductDetails = ({ productId }: Props) => {
   const product = products.find((item) => item.id === productId);
-  console.log({ product });
+
+  const { addToCart, cartProducts } = useCart();
   const [cartItem, setCartItem] = useState<CartProductType>({
     id: product ? product.id : "",
     name: product ? product.name : "",
@@ -51,6 +52,11 @@ export const ProductDetails = ({ productId }: Props) => {
       };
     });
   };
+
+  const handleAdd = (cartItem: CartProductType) => {
+    addToCart(cartItem);
+  };
+  console.log({ cartProducts });
   return (
     <div>
       <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
@@ -90,14 +96,17 @@ export const ProductDetails = ({ productId }: Props) => {
                 images={product ? product.images : []}
               />
             </div>
-            <ProductQuantity
-              cartProduct={cartItem}
-              handleDecrease={handleDecrease}
-              handleIncrease={handleIncrease}
-            />
-            <div>
-              <Button>Add to cart</Button>
-            </div>
+            {cartProducts.length === 0 ? (
+              <div>
+                <Button onClick={() => handleAdd(cartItem)}>Add to cart</Button>
+              </div>
+            ) : (
+              <ProductQuantity
+                cartProduct={cartItem}
+                handleDecrease={handleDecrease}
+                handleIncrease={handleIncrease}
+              />
+            )}
           </div>
         </div>
       </div>

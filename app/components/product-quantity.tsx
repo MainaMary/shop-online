@@ -19,9 +19,8 @@ const ProductQuantity = ({
       {cartQuantity ? (
         <div></div>
       ) : (
-        <div className="flex gap-4">
-          <p className="font-semibold">Quantity</p>
-          <div className="flex gap-2 h-auto items-center">
+        <div className="flex ">
+          <div className="flex gap-2 justify-between h-auto items-center">
             <button
               className="w-7 h-7 rounded-md flex items-center text-center justify-center  border-[2px] m-auto border-slate-600"
               onClick={handleDecrease}
