@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CartContextProvider from "../hooks/useCartHook";
+import CartContextProvider from "../hooks/useCartContext";
 
 const poppins = Poppins({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
