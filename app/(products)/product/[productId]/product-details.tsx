@@ -8,7 +8,7 @@ import ColorSelect from "@/app/components/color-select";
 import Image from "next/image";
 import { CartProductType, SelectedImgType } from "@/types/types";
 import { ProductQuantity, Button, ListRating } from "@/app/components";
-import { useCart } from "@/hooks/useCartHook";
+import { useCart } from "@/hooks/useCartContext";
 interface Props {
   productId: string;
 }
@@ -24,6 +24,7 @@ export const ProductDetails = ({ productId }: Props) => {
     desc: product ? product.description : "",
     category: product ? product.category : "",
     brand: product ? product.brand : "",
+    image: product ? product.images[0].image : "",
     selectedImg: product ? { ...product.selectedImg } : "",
     quantity: 1,
     price: product ? product.price : "",
