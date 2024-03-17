@@ -7,6 +7,7 @@ export type CartProductType = {
   selectedImg: SelectedImgType;
   quantity: number;
   price: number | string;
+  image: string;
 };
 export interface SelectedImgType {
   color: string;
