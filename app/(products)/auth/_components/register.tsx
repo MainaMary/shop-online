@@ -3,7 +3,24 @@ import React, { useState } from "react";
 import { Title, Label, Input, Button } from "@/app/components";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+export interface RegisterType {
+  name: string;
+  email: string;
+  password: string;
+}
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterType>({
+    defaultValues: {
+      email: "",
+      password: "",
+      name: "",
+    },
+  });
   const [visible, setVisible] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
@@ -21,35 +38,37 @@ const Register = () => {
   const handleVisible = () => {
     setVisible((prev) => !prev);
   };
+  const onSubmit = (data: RegisterType) => {
+    console.log({ data });
+  };
   return (
     <div className="m-auto bg-white flex justify-center">
       <div>
-        <form className="w-full   space-y-2">
+        <form className="w-full   space-y-2" onSubmit={handleSubmit(onSubmit)}>
           <Title>Sign up to your account</Title>
           <div>
             <Label>Email address</Label>
             <Input
               type="text"
-              name="email"
-              onChange={handleInputChange}
               value={email || ""}
+              {...register("email", { required: true, maxLength: 80 })}
             />
+            {errors.email && <p>{errors.email.message}</p>}
           </div>
           <div>
             <Label>Name</Label>
             <Input
               type="text"
-              name="name"
-              onChange={handleInputChange}
               value={name || ""}
+              {...register("name", { required: true, maxLength: 80 })}
             />
+            {errors.name && <p>{errors.name.message}</p>}
           </div>
           <div>
             <Label>Password</Label>
             <div className="relative">
               <Input
-                name="password"
-                onChange={handleInputChange}
+                {...register("password", { required: true, maxLength: 80 })}
                 type={visible ? "text" : "password"}
                 value={password}
               />
@@ -60,6 +79,7 @@ const Register = () => {
                 {visible ? <AiFillEyeInvisible /> : <AiFillEye />}
               </div>
             </div>
+            {errors.password && <p>{errors.password.message}</p>}
           </div>
           <div className="my-4 block  md:flex justify-between">
             <p>
