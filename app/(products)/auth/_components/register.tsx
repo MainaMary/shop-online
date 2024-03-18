@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Title, Label, Input, Button } from "@/app/components";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
 const Register = () => {
   const [visible, setVisible] = useState(false);
   const [formValues, setFormValues] = useState({
@@ -72,18 +71,6 @@ const Register = () => {
             <p>Forgot password?</p>
           </div>
           <Button>Sign up</Button>
-        </form>
-        <form>
-          <div className="my-4 items-center flex before:border-t-2 before:flex-1  before:border-gray-500  after:border-t-2 after:flex-1  after:border-gray-500">
-            <p className="uppercase text-center font-medium text-2xl mx-2">
-              or
-            </p>
-          </div>
-
-          <Button name="Continue with Google" type="submit">
-            <FcGoogle />
-            <p className="ml-4">Continue with Google</p>
-          </Button>
         </form>
       </div>
     </div>
