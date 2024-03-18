@@ -42,7 +42,7 @@ const Register = () => {
     console.log({ data });
   };
   return (
-    <div className="m-auto bg-white flex justify-center">
+    <div className="m-auto bg-white w-[50%] flex justify-center">
       <div>
         <form className="w-full   space-y-2" onSubmit={handleSubmit(onSubmit)}>
           <Title>Sign up to your account</Title>
