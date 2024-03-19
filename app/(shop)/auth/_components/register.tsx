@@ -16,9 +16,9 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterType>({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
-      name: "",
     },
   });
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,9 @@ const Register = () => {
   };
   const onSubmit = (data: RegisterType) => {
     console.log({ data });
+    console.log("submitted!!");
   };
+  console.log(errors);
   return (
     <div className="m-auto bg-white w-[50%] flex justify-center">
       <div>
@@ -50,27 +52,29 @@ const Register = () => {
             <Label>Email address</Label>
             <Input
               type="text"
-              value={email || ""}
-              {...register("email", { required: true, maxLength: 80 })}
+              id="email"
+              {...register("email", { required: true })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {/* {errors.email && <p>{errors.email.message}</p>} */}
           </div>
           <div>
             <Label>Name</Label>
             <Input
               type="text"
-              value={name || ""}
+              id="name"
+              errors={errors.name}
               {...register("name", { required: true, maxLength: 80 })}
             />
-            {errors.name && <p>{errors.name.message}</p>}
+            {/* {errors.name && <p>{errors.name.message}</p>} */}
           </div>
           <div>
             <Label>Password</Label>
             <div className="relative">
               <Input
                 {...register("password", { required: true, maxLength: 80 })}
+                id="password"
+                errors={errors.password}
                 type={visible ? "text" : "password"}
-                value={password}
               />
               <div
                 onClick={handleVisible}
@@ -79,7 +83,7 @@ const Register = () => {
                 {visible ? <AiFillEyeInvisible /> : <AiFillEye />}
               </div>
             </div>
-            {errors.password && <p>{errors.password.message}</p>}
+            {/* {errors.password && <p>{errors.password.message}</p>} */}
           </div>
           <div className="my-4 block  md:flex justify-between">
             <p>
@@ -90,7 +94,8 @@ const Register = () => {
             </p>
             <p>Forgot password?</p>
           </div>
-          <Button>Sign up</Button>
+          <button type="submit">submit</button>
+          {/* <Button>Sign up</Button> */}
         </form>
       </div>
     </div>
