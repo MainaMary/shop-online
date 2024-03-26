@@ -34,15 +34,15 @@ export default nextAuth({
             email: credentials.email,
           },
         });
-        if (!user || !user?.hashedpassword) {
+        if (!user || !user?.hashedPassword) {
           throw new Error("User does not exist");
         }
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password,
-          user.password
+          user.hashedPassword
         );
         if (!isPasswordCorrect) {
-          throw new Error("Wrong password");
+          throw new Error("Wrong credentials");
         }
         return user;
       },
