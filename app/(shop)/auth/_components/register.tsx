@@ -4,76 +4,80 @@ import { Title, Label, Input, Button } from "@/app/components";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { SignInResponse, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export interface RegisterType {
   name: string;
   email: string;
   password: string;
 }
 const Register = () => {
+  const [visible, setVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterType>({
     defaultValues: {
-      name: "",
       email: "",
+      name: "",
       password: "",
     },
   });
-  const [visible, setVisible] = useState(false);
-  const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
-  const { email, password, name } = formValues;
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      [name]: value,
-    }));
+  const router = useRouter();
+
+  const handleRegister = async (data: RegisterType) => {
+    try {
+      const response = await axios.post("/api/register", data);
+      toast.success("User registered succesfully");
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      }).then((callback: SignInResponse | undefined) => {
+        if (callback?.ok) {
+          router.push("/");
+        }
+      });
+      return response;
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const handleVisible = () => {
     setVisible((prev) => !prev);
   };
   const onSubmit = (data: RegisterType) => {
-    console.log({ data });
+    console.log(data);
     console.log("submitted!!");
+    handleRegister(data);
   };
-  console.log(errors);
+
   return (
-    <div className="m-auto bg-white w-[50%] flex justify-center">
+    <div className="m-auto bg-white w-[50%] flex justify-center h-auto">
       <div>
-        <form className="w-full   space-y-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="w-full    space-y-2" onSubmit={handleSubmit(onSubmit)}>
           <Title>Sign up to your account</Title>
           <div>
             <Label>Email address</Label>
-            <Input
-              type="text"
-              id="email"
-              {...register("email", { required: true })}
-            />
+            <input type="text" {...register("email")} />
             {/* {errors.email && <p>{errors.email.message}</p>} */}
           </div>
           <div>
             <Label>Name</Label>
-            <Input
-              type="text"
-              id="name"
-              errors={errors.name}
-              {...register("name", { required: true, maxLength: 80 })}
-            />
+            <input type="text" {...register("name")} />
             {/* {errors.name && <p>{errors.name.message}</p>} */}
           </div>
           <div>
             <Label>Password</Label>
             <div className="relative">
-              <Input
-                {...register("password", { required: true, maxLength: 80 })}
-                id="password"
-                errors={errors.password}
+              <input
+                {...register("password")}
                 type={visible ? "text" : "password"}
               />
               <div
