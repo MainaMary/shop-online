@@ -5,14 +5,22 @@ import { truncateText } from "../../utils/truncate";
 import { formatPrice } from "../../utils/format-price";
 import { productReview } from "@/utils/product-review";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface ProductProps {
   product: any;
 }
 export function ProductCard({ product }: ProductProps) {
+  const router = useRouter();
+  const handleNavigate = () => {
+    router.push(`/product/${product.id}`);
+  };
   return (
     <div className=" transition hover:scale-105 text-center text-sm col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-md p-2">
-      <div className="flex flex-col items-center gap-1 w-full">
+      <div
+        className="flex flex-col items-center gap-1 w-full cursor-pointer"
+        onClick={handleNavigate}
+      >
         <div className="aspect-square overflow-hidden relative w-full">
           <Image
             fill
@@ -33,7 +41,7 @@ export function ProductCard({ product }: ProductProps) {
         <div>
           <p className="font-semibold">{formatPrice(product.price)}</p>
         </div>
-        <Link href={`/product/${product.id}`}>View</Link>
+        <button>Add to cart</button>
       </div>
     </div>
   );
