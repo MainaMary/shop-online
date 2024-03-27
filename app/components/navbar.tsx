@@ -1,17 +1,14 @@
 import React from "react";
-import { useCart } from "@/hooks/useCartContext";
-import { FiShoppingCart } from "react-icons/fi";
-import Container from "./container";
 import UserProfile from "./user-profile";
 import { getLoggedInUser } from "../controller/getLoggedInUser";
+import { CartIcon } from "@/app/components";
+import Link from "next/link";
 export async function Navbar() {
-  // const { cartTotalQuantity } = useCart();
   const currentUser = await getLoggedInUser();
-  console.log({ currentUser });
   return (
     <nav className="h-20 flex px-16  w-full justify-between  items-center shadow-md mb-4">
       <div>
-        <p>Shop online</p>
+        <Link href="/">Shop online</Link>
       </div>
       <div style={{ width: "50%" }}>
         <form className="w-full mx-auto">
@@ -55,10 +52,8 @@ export async function Navbar() {
           </div>
         </form>
       </div>
-      <UserProfile />
-      <div className="cursor-pointer">
-        <FiShoppingCart size={24} />
-      </div>
+      <UserProfile currentUser={currentUser} />
+      <CartIcon />
     </nav>
   );
 }
