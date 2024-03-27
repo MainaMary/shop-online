@@ -9,8 +9,10 @@ import { CiLogout } from "react-icons/ci";
 import Link from "next/link";
 import Backdrop from "./backdrop";
 import { signOut } from "next-auth/react";
-
-const UserProfile = () => {
+import { CiLogin } from "react-icons/ci";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { CurrentuserProps } from "@/types/types";
+const UserProfile = ({ currentUser }: any) => {
   const [isToggle, setIsToggle] = useState(false);
   const handleToggle = () => {
     setIsToggle((prev) => !prev);
@@ -30,7 +32,7 @@ const UserProfile = () => {
           <IoMdArrowDropdown size={20} />
         )}
       </div>
-      {isToggle && <UserMenu />}
+      {isToggle && <UserMenu currentUser={currentUser} />}
       {isToggle && <Backdrop onClick={handleToggle} />}
     </>
   );
@@ -38,7 +40,7 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-export const UserMenu = () => {
+export const UserMenu = ({ currentUser }: any) => {
   const handleLogOut = () => {
     signOut();
   };
@@ -49,6 +51,7 @@ export const UserMenu = () => {
       path: "/orders",
       icon: <FaShoppingBasket />,
       action: "",
+      isProtected: true,
     },
     {
       label: "Admin dashboard",
@@ -56,6 +59,7 @@ export const UserMenu = () => {
       path: "/admin",
       icon: <MdDashboard />,
       action: "",
+      isProtected: true,
     },
     {
       label: "Logout",
@@ -63,21 +67,46 @@ export const UserMenu = () => {
       path: "/logout",
       icon: <CiLogout />,
       action: handleLogOut,
+      isProtected: false,
     },
   ];
   return (
     <div className="rounded-sm flex-col absolute shadow-md w-[180px] bg-white overflow-hidden right-[230px] top-16 text-[15px] flex  px-4 py-3 hover:bg-neutral-100 transition z-40 ">
-      {menuItems.map((label) => (
-        <Link
-          className="flex my-2 gap-3 h-auto items-center"
-          href={label.path}
-          key={label.id}
-          onClick={handleLogOut}
-        >
-          <span>{label.icon}</span>
-          <span>{label.label}</span>
-        </Link>
-      ))}
+      {currentUser?.email ? (
+        menuItems.map((label) => (
+          <div>
+            <Link
+              className="flex my-2 gap-3 h-auto items-center"
+              href={label.path}
+              key={label.id}
+              onClick={handleLogOut}
+            >
+              <>
+                <span>{label.icon}</span>
+                <span>{label.label}</span>
+              </>
+            </Link>
+            <hr />
+          </div>
+        ))
+      ) : (
+        <>
+          <Link
+            className="flex my-2 gap-3 h-auto items-center"
+            href={"/auth/login"}
+          >
+            <CiLogin />
+            <span>Login</span>
+          </Link>
+          <Link
+            className="flex my-2 gap-3 h-auto items-center"
+            href={"/auth/register"}
+          >
+            <FaRegCircleUser />
+            <span>Register</span>
+          </Link>
+        </>
+      )}
     </div>
   );
 };
