@@ -14,3 +14,14 @@ export interface SelectedImgType {
   colorCode: string;
   image: string;
 }
+export interface CurrentuserProps {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: null;
+  image: null;
+  hashedPassword: string;
+  createdAt: Date;
+  updatedAt: Date;
+  role: string;
+}
