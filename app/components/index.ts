@@ -7,3 +7,5 @@ export { default as Input } from "../components/input";
 export { default as Title } from "../components/title";
 export { default as Container } from "../components/container";
 export { default as Backdrop } from "../components/backdrop";
+export { default as CartIcon } from "../components/cart-icon";
+export { default as SideNav } from "../components/sidenav";
