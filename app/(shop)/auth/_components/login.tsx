@@ -4,12 +4,17 @@ import { Title, Label, Input, Button } from "@/app/components";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 const Login = () => {
   const [visible, setVisible] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { email, password } = formValues;
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -21,10 +26,30 @@ const Login = () => {
   const handleVisible = () => {
     setVisible((prev) => !prev);
   };
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+      if (callback?.ok) {
+        router.push("/");
+        toast.success("User logged in successfully");
+      }
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
+  };
   return (
     <div className="flex w-[50%] shadow-lg justify-center  m-auto border border-solid bg-white">
       <div className="w-full p-10">
-        <form className="w-full   space-y-2">
+        <form className="w-full   space-y-2" onSubmit={onSubmit}>
           <Title>Sign in to your account</Title>
           <div>
             <Label>Email address</Label>
@@ -61,9 +86,9 @@ const Login = () => {
             </p>
             <p>Forgot password?</p>
           </div>
-          <Button>Sign in</Button>
+          <Button type="submit">{isLoading ? "Loading..." : "Sign in"}</Button>
         </form>
-        <form>
+        {/* <form>
           <div className="my-4 items-center flex before:border-t-2 before:flex-1  before:border-gray-500  after:border-t-2 after:flex-1  after:border-gray-500">
             <p className="uppercase text-center font-medium text-2xl mx-2">
               or
@@ -74,7 +99,7 @@ const Login = () => {
             <FcGoogle />
             <p className="ml-4">Continue with Google</p>
           </Button>
-        </form>
+        </form> */}
       </div>
     </div>
   );
