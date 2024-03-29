@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
 import Image from "next/image";
 import { truncateText } from "../../utils/truncate";
@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCartContext";
 import Button from "./button";
 import ProductQuantity from "./product-quantity";
+import Link from "next/link";
+
 interface ProductProps {
   product: any;
 }
@@ -24,10 +26,13 @@ export function ProductCard({ product }: ProductProps) {
     image: product ? product.images[0].image : "",
     selectedImg: product ? { ...product.selectedImg } : "",
     quantity: 1,
-    price: product ? product.price : "",
+    price: product ? product.price : 0,
   });
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart, cartProducts: cartContextProducts } = useCart();
+  const productCheck = (cartContextProducts as CartProductType[])?.find(
+    (label) => label.id === product.id
+  );
   const handleNavigate = () => {
     router.push(`/product/${product.id}`);
   };
@@ -50,18 +55,32 @@ export function ProductCard({ product }: ProductProps) {
       };
     });
   };
+  useEffect(() => {
+    if (cartContextProducts) {
+      const checkProductIndex = cartContextProducts.findIndex(
+        (item) => item.id === product?.id
+      );
+      if (checkProductIndex > -1) {
+        setIsProductInCart(true);
+      }
+    }
+  }, [cartContextProducts]);
   return (
     <div className=" transition hover:scale-105 text-center text-sm col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-md p-2">
-      <div
-        className="flex flex-col items-center gap-1 w-full cursor-pointer"
-        onClick={handleNavigate}
-      >
+      <div className="flex flex-col items-center gap-1 w-full cursor-pointer">
         <div className="aspect-square overflow-hidden relative w-full">
+          <Link
+            href={`/product/${product.id}`}
+            className="text-underline text-start text-pink-400 cursor-pointer"
+          >
+            View cart
+          </Link>
           <Image
             fill
             src={product.images[0].image}
             alt={product.name}
             className="w-full h-full object-contain"
+            onClick={handleNavigate}
           />
         </div>
         <div>
@@ -74,18 +93,19 @@ export function ProductCard({ product }: ProductProps) {
           <p>{`${product.reviews.length} reviews`}</p>
         </div>
         <div>
-          <p className="font-semibold">{formatPrice(product.price)}</p>
+          <p className="font-semibold">
+            {product ? formatPrice(product.price) : ""}
+          </p>
         </div>
-        <button>Add to cart</button>
         {!isProductInCart ? (
           <div>
-            <Button onClick={() => handleAddToCart(product)}>
+            <Button onClick={() => handleAddToCart(cartItem)}>
               Add to cart
             </Button>
           </div>
         ) : (
           <ProductQuantity
-            cartProduct={cartItem}
+            cartProduct={productCheck}
             handleDecrease={handleDecrease}
             handleIncrease={handleIncrease}
           />
