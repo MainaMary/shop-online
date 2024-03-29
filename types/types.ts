@@ -4,9 +4,9 @@ export type CartProductType = {
   desc: string;
   category: string;
   brand: string;
-  selectedImg: SelectedImgType;
+  selectedImg?: SelectedImgType;
   quantity: number;
-  price: number | string;
+  price: number;
   image: string;
 };
 export interface SelectedImgType {
