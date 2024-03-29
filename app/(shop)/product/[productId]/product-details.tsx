@@ -18,6 +18,10 @@ export const ProductDetails = ({ productId }: Props) => {
   const product = products.find((item) => item.id === productId);
 
   const { addToCart, cartProducts: cartContextProducts } = useCart();
+  const productDetail = cartContextProducts?.find(
+    (item) => item.id == productId
+  );
+
   const [cartItem, setCartItem] = useState<CartProductType>({
     id: product ? product.id : "",
     name: product ? product.name : "",
@@ -25,9 +29,8 @@ export const ProductDetails = ({ productId }: Props) => {
     category: product ? product.category : "",
     brand: product ? product.brand : "",
     image: product ? product.images[0].image : "",
-    selectedImg: product ? { ...product.selectedImg } : "",
     quantity: 1,
-    price: product ? product.price : "",
+    price: product ? product.price : 0,
   });
   const handleColorSelect = useCallback(
     (value: SelectedImgType) => {
@@ -99,21 +102,14 @@ export const ProductDetails = ({ productId }: Props) => {
             <p className={product?.inStock ? "text-green-400" : "text-red-400"}>
               {product && product.inStock ? "In stock" : "Out of stock"}
             </p>
-            <div>
-              <span className="font-semibold">Color :</span>
-              <ColorSelect
-                handleColorSelect={handleColorSelect}
-                cartItem={cartItem}
-                images={product ? product.images : []}
-              />
-            </div>
+
             {!isProductInCart ? (
               <div>
                 <Button onClick={() => handleAdd(cartItem)}>Add to cart</Button>
               </div>
             ) : (
               <ProductQuantity
-                cartProduct={cartItem}
+                cartProduct={productDetail}
                 handleDecrease={handleDecrease}
                 handleIncrease={handleIncrease}
               />
