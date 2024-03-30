@@ -46,9 +46,43 @@ model User {
     createdAt      DateTime  @default(now())
     updatedAt      DateTime  @default(now())
     role           Role      @default(USER)
+    orders         Order[]
 }
 
 enum Role {
     USER
     ADMIN
+}
+
+type Address {
+    city       String
+    country    String
+    line1      String
+    line2      String
+    postalCode String
+}
+
+model Order {
+    id              String            @id @default(auto()) @map("_id") @db.ObjectId
+    amount          Float
+    currency        String
+    status          String
+    deliveryStatus  String?
+    userId          String            @db.ObjectId
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @default(now())
+    paymentIntentId String            @unique
+    address         Address?
+    products        CartProductType[]
+    user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+type CartProductType {
+    id          String
+    name        String
+    description String
+    category    String
+    brand       String
+    quantity    Int
+    price       Float
 }
