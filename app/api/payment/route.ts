@@ -14,8 +14,8 @@ const caluclateSubTotal = (cartItems: CartProductType[]) => {
   return total;
 };
 export async function POST(request: Request) {
-  //check the current logged in user
   const currentUser = await getLoggedInUser();
+  //user not logged in
   if (!currentUser) {
     const response = NextResponse.json(
       {
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
     );
     return response;
   }
+  //user logged in
   const body = await request.json();
   const { items, payment_intent_id } = body;
   const total = Math.round(caluclateSubTotal(items) * 100);
