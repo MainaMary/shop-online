@@ -3,7 +3,7 @@ import { truncateText } from "../../utils/truncate";
 import { ProductCard } from "./product-card";
 export function Products() {
   return (
-    <div className=" grid grid-cols-4 md:grid-cols-4  gap-4">
+    <div className=" grid grid-cols-1 md:grid-cols-4  gap-4">
       {products.map((product) => (
         <ProductCard product={product} />
       ))}

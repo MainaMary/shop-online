@@ -35,7 +35,7 @@ const SideNav = () => {
   return (
     <div className="px-12">
       {menuItems.map(({ label, id, icon }) => (
-        <p className="my-12 flex gap-2" key={id}>
+        <p className="my-12 flex gap-2 cursor-pointer" key={id}>
           {icon}
           {label}
         </p>
