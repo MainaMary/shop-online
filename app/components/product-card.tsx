@@ -14,6 +14,7 @@ import Link from "next/link";
 
 interface ProductProps {
   product: any;
+  products: any;
 }
 export function ProductCard({ product }: ProductProps) {
   const [isProductInCart, setIsProductInCart] = useState(false);
