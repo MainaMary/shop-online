@@ -8,7 +8,7 @@ export function Products() {
   return (
     <div className=" grid grid-cols-1 md:grid-cols-4  gap-4">
       {itemsToSplice.map((product) => (
-        <ProductCard product={product} products={products} />
+        <ProductCard product={product} products={products} key={product.id} />
       ))}
     </div>
   );

@@ -74,11 +74,10 @@ export const UserMenu = ({ currentUser }: any) => {
     <div className="rounded-sm flex-col absolute shadow-md w-[180px] bg-white overflow-hidden right-[230px] top-16 text-[15px] flex  px-4 py-3 hover:bg-neutral-100 transition z-40 ">
       {currentUser?.email ? (
         menuItems.map((label) => (
-          <div>
+          <div key={label.id}>
             <Link
               className="flex my-2 gap-3 h-auto items-center"
               href={label.path}
-              key={label.id}
               onClick={handleLogOut}
             >
               <>
