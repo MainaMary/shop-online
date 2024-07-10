@@ -66,6 +66,7 @@ export function ProductCard({ product }: ProductProps) {
       }
     }
   }, [cartContextProducts]);
+
   return (
     <div className=" transition hover:scale-105 text-center text-sm col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-md p-2">
       <div className="flex flex-col items-center gap-1 w-full cursor-pointer">

@@ -58,6 +58,7 @@ export function Footer() {
           {icons.map((icon) => (
             <Link
               href={icon.label}
+              key={icon.label}
               className="w-[40px] h-[40px] rounded-full bg-white text-slate-700 flex m-auto items-center justify-center"
             >
               {icon.icon}
