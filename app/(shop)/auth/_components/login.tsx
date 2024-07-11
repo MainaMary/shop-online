@@ -79,7 +79,7 @@ const Login = () => {
           </div>
           <div className="my-4 block  md:flex justify-between">
             <p>
-              Don't have an account?{" "}
+              Do not have an account?&nbsp;
               <span className="text-primary-color">
                 <Link href="/auth/register">Sign up</Link>
               </span>

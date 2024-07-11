@@ -56,6 +56,7 @@ export function ProductCard({ product }: ProductProps) {
       };
     });
   };
+
   useEffect(() => {
     if (cartContextProducts) {
       const checkProductIndex = cartContextProducts.findIndex(
@@ -65,7 +66,7 @@ export function ProductCard({ product }: ProductProps) {
         setIsProductInCart(true);
       }
     }
-  }, [cartContextProducts]);
+  }, [cartContextProducts, product]);
 
   return (
     <div className=" transition hover:scale-105 text-center text-sm col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-md p-2">
