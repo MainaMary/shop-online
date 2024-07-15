@@ -4,16 +4,16 @@ import { IoIosMore } from "react-icons/io";
 const Payments = ({ cards }: any) => {
     return (
         <div className="rounded-md p-5 bg-green-100 border-solid cursor-pointer block">
-            <div className="flex w-full justify-between">
-                <div className="w-[30px] h-[30px] rounded-full text-center m-auto flex justify-center items-center bg-blue-200 border-solid border-green-100">
-                    {cards.icon}
+            <div className=" flex justify-between h-auto items-center text-start">
+                <div className='w-[30px] h-[30px] rounded-full flex justify-center items-center bg-green-200'>{cards.icon}</div>
+                <div>
+                    <IoIosMore />
                 </div>
 
-                <IoIosMore />
 
             </div>
-            <p>{cards.label}</p>
-            <p className="my-3">{cards.stats}</p>
+            <p className='font-medium'>{cards.label}</p>
+            <p className="my-3 font-medium">{cards.stats}</p>
             <div className="flex my-4 gap-3 h-auto items-center">
                 {cards.small}
                 <span className="text-gray-500 ">{cards.subTitle}</span>

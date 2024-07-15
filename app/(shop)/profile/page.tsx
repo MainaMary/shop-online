@@ -6,13 +6,16 @@ import { AiFillProject } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
+import { PiCrownDuotone } from "react-icons/pi";
+import { PiAlarmBold } from "react-icons/pi";
+import { MdAccountBalanceWallet } from "react-icons/md";
 
 const cards = {
     payment: [
         {
             label: "Available balance",
             stats: "KSH 2,675,000",
-            icon: <AiFillProject />,
+            icon: <MdAccountBalanceWallet />,
             subTitle: "Farmer's available ",
             small: <RiErrorWarningLine />,
             btn: ""
@@ -53,22 +56,22 @@ const cards = {
     overview: [
         {
             label: "Farm size",
-            stats: "120.0",
-            icon: <AiFillProject />,
+            stats: "120",
+            icon: < PiAlarmBold />,
             subTitle: "Total farm size in acres",
             small: <RiErrorWarningLine />
         },
         {
             label: "Products",
-            stats: "120.0",
+            stats: "14",
             icon: <AiFillProject />,
             subTitle: "Products supplied",
             small: <RiErrorWarningLine />
         },
         {
             label: "Livestock",
-            stats: "120.0",
-            icon: <AiFillProject />,
+            stats: "100",
+            icon: <PiCrownDuotone />,
             subTitle: "Livestock owned by a farmer",
             small: <RiErrorWarningLine />
         }
