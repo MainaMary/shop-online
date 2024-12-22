@@ -25,3 +25,6 @@ const Payments = ({ cards }: any) => {
 };
 
 export default Payments;
+
+
+
